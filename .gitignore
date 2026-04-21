@@ -1,0 +1,23 @@
+# Git ignore
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+venv/
+.venv/
+
+# Frontend
+node_modules/
+dist/
+.env.local
+
+# Misc
+.DS_Store
+*.log
+.idea/
+.vscode/
