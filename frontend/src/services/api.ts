@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || '/api',
+    baseURL: import.meta.env.VITE_API_URL || 'https://hidevs.onrender.com/api',
     headers: { 'Content-Type': 'application/json' },
 })
 
@@ -23,7 +23,7 @@ api.interceptors.response.use(
             if (refreshToken) {
                 try {
                     const { data } = await axios.post(
-                        (import.meta.env.VITE_API_URL || '/api') + '/auth/refresh',
+                        (import.meta.env.VITE_API_URL || 'https://hidevs.onrender.com/api') + '/auth/refresh',
                         { refresh_token: refreshToken }
                     )
                     localStorage.setItem('access_token', data.access_token)
