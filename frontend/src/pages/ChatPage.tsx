@@ -217,7 +217,7 @@ const ChatPage = () => {
                                     <Bot size={32} color="white" />
                                 </div>
                                 <h2 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
-                                    HiDevs AI Assistant
+                                    AI Assistant
                                 </h2>
                                 <p style={{ color: 'var(--text-muted)', textAlign: 'center', maxWidth: 400 }}>
                                     Ask me anything about code, debugging, architecture, best practices, or any developer topic.
