@@ -170,6 +170,8 @@ pytest tests/ -v
 # Expected: 15 passed
 ```
 
+> **⚠️ Note on Live Demo:** The backend is hosted on Render's free tier. Free instances spin down after inactivity, which can cause the first request to take 50 seconds or more. This is a Render platform limitation — not a code issue. If login appears slow on first load, wait a moment and retry. For a smooth demonstration, please refer to the walkthrough video.
+
 ---
 
 ## 📡 API Reference
@@ -203,7 +205,8 @@ Swagger UI: `http://localhost:8000/docs`
 | `REFRESH_TOKEN_EXPIRE_DAYS` | Refresh token TTL | `7` |
 | `GROQ_API_KEY` | Groq Cloud API key | `gsk_...` |
 | `GROQ_MODEL` | Model identifier | `openai/gpt-oss-20b` |
-| `FRONTEND_URL` | Allowed CORS origin | `http://localhost:5173` |
+| `FRONTEND_URL` | Allowed CORS origin | `https://hidevs.vercel.app` |
+| `VITE_API_URL` | Frontend → backend URL (Vercel only) | `https://hidevs.onrender.com/api` |
 
 See `.env.example` for a copyable template.
 
