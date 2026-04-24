@@ -243,7 +243,7 @@ Services:
 
 ## User Interface
 
-- Dashboard
+- User Dashboard
   
   ![Dashboard](assets/dashboard.png)
   
@@ -258,10 +258,6 @@ Services:
 - AI Code Reviewer
 
   ![AI Code Reviewer](assets/reviewer.png)
-
-- Login
-
-  ![Login](assets/login.png)
 
 ---
 
