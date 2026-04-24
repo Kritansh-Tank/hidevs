@@ -74,7 +74,8 @@ const ChatPage = () => {
 
         try {
             const token = localStorage.getItem('access_token')
-            const response = await fetch('/api/chat/message', {
+            const baseUrl = import.meta.env.VITE_API_URL || 'https://hidevs.onrender.com/api'
+            const response = await fetch(`${baseUrl}/chat/message`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
