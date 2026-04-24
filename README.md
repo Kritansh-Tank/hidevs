@@ -241,6 +241,30 @@ Services:
 
 ---
 
+## User Interface
+
+- Dashboard
+  
+  ![Dashboard](assets/dashboard.png)
+  
+- AI Assistant
+
+  ![AI Assistant](assets/assistant.png)
+  
+- AI Summarizer
+
+  ![AI Summarizer](assets/summarizer.png)
+  
+- AI Code Reviewer
+
+  ![AI Code Reviewer](assets/reviewer.png)
+
+- Login
+
+  ![Login](assets/login.png)
+
+---
+
 ## 🌐 Deployment (Render)
 
 1. Push repo to GitHub
