@@ -99,28 +99,26 @@ async def summarize_text(text: str, style: str = "concise") -> dict:
             ],
             max_tokens=1024,
             temperature=0.3,
-            response_format={"type": "json_object"},
         )
-        content = response.choices[0].message.content
-        result = json.loads(content)
-        return {
-            "summary": result.get("summary", ""),
-            "key_points": result.get("key_points", []),
-            "word_count_original": len(text.split()),
-            "word_count_summary": len(result.get("summary", "").split()),
-        }
-    except json.JSONDecodeError:
-        # Fallback: return raw content
-        raw = response.choices[0].message.content if response else "Unable to summarize."
-        return {
-            "summary": raw,
-            "key_points": [],
-            "word_count_original": len(text.split()),
-            "word_count_summary": len(raw.split()),
-        }
+        content = response.choices[0].message.content or ""
+        try:
+            result = json.loads(content)
+            return {
+                "summary": result.get("summary", ""),
+                "key_points": result.get("key_points", []),
+                "word_count_original": len(text.split()),
+                "word_count_summary": len(result.get("summary", "").split()),
+            }
+        except json.JSONDecodeError:
+            return {
+                "summary": content,
+                "key_points": [],
+                "word_count_original": len(text.split()),
+                "word_count_summary": len(content.split()),
+            }
     except Exception as e:
         return {
-            "summary": f"⚠️ Summarization failed: {str(e)}",
+            "summary": f"Summarization failed: {str(e)}",
             "key_points": [],
             "word_count_original": len(text.split()),
             "word_count_summary": 0,
@@ -148,33 +146,37 @@ async def review_code(code: str, language: str = "auto", focus: str = "all") -> 
             ],
             max_tokens=2048,
             temperature=0.2,
-            response_format={"type": "json_object"},
         )
-        content = response.choices[0].message.content
-        result = json.loads(content)
-        return {
-            "language_detected": result.get("language_detected", language),
-            "overall_score": result.get("overall_score", 5),
-            "overview": result.get("overview", ""),
-            "issues": result.get("issues", []),
-            "suggestions": result.get("suggestions", []),
-            "improved_snippet": result.get("improved_snippet"),
-        }
-    except json.JSONDecodeError:
-        raw = response.choices[0].message.content if response else ""
-        return {
-            "language_detected": language,
-            "overall_score": 5,
-            "overview": raw,
-            "issues": [],
-            "suggestions": [],
-            "improved_snippet": None,
-        }
+        content = response.choices[0].message.content or ""
+        # Extract JSON from response (model may wrap it in markdown)
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+        try:
+            result = json.loads(content)
+            return {
+                "language_detected": result.get("language_detected", language),
+                "overall_score": result.get("overall_score", 5),
+                "overview": result.get("overview", ""),
+                "issues": result.get("issues", []),
+                "suggestions": result.get("suggestions", []),
+                "improved_snippet": result.get("improved_snippet"),
+            }
+        except json.JSONDecodeError:
+            return {
+                "language_detected": language,
+                "overall_score": 5,
+                "overview": content,
+                "issues": [],
+                "suggestions": [],
+                "improved_snippet": None,
+            }
     except Exception as e:
         return {
             "language_detected": language,
             "overall_score": 0,
-            "overview": f"⚠️ Code review failed: {str(e)}",
+            "overview": f"Code review failed: {str(e)}",
             "issues": [],
             "suggestions": [],
             "improved_snippet": None,
